@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenue dans Canard Fighter Simulator !");
@@ -10,4 +11,5 @@ public class Main {
         System.out.println("3. Quitter");
         scanner.close();
     }
+    
 }
