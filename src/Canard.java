@@ -51,6 +51,7 @@ public abstract class Canard {
 
     public boolean estKO() {
         return pointsDeVie <= 0;
+
     }
 
 
