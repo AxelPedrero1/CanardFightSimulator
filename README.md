@@ -17,3 +17,6 @@ Utiliser une classe ou une interface supplementaire pour gerer les capacites spe
 
 ## 5. Quels défis sont associés à l’extensibilité de votre modèle pour ajouter de nouveaux types de canards ou de nouvelles capacités ?
 Le principal défi est de gérer la complexité qui augmente à chaque ajout. Quand on ajoute de nouveaux types ou capacités les interactions (forces, faiblesses, statuts) deviennent plus difficiles à organiser. Il faut que le modèle reste flexible et simple ce qui peut nécessiter l'utilisation de design patterns comme le State Pattern. Il faut aussi veiller à ce que l'interface reste claire et que les tests unitaires couvrent bien les nouvelles fonctionnalités
+
+
+## Réalisations bonus : Effets de statut, Points d’énergie (PE), Attaques critiques 
