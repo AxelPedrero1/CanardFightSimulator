@@ -54,6 +54,21 @@ public abstract class Canard {
 
     }
 
+    /**
+     * Permet à un canard dactiver sa capacite spécial
+     */
+    public abstract void activerCapaciteSpeciale();
+
+    // Méthodes protégées pour modifier certains attributs, utiles pour les capacités spéciales
+    protected void augmenterPV(int points) {
+        this.pointsDeVie += points;
+        System.out.println(nom + " regagne " + points + " PV et a maintenant " + pointsDeVie + " PV.");
+    }
+
+    protected void setPointsAttaque(int pa) {
+        this.pointsAttaque = pa;
+    }
+
 
 
 }
