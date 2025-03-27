@@ -6,16 +6,25 @@ public class CanardEau extends Canard {
     }
 
     /**
-     * Capacité spéciale CanardEau : régénère 20 PV.
+     * Capacite speciale : regenere 20 PV.
+     * Coute 15 PE.
      */
     @Override
-    public void activerCapaciteSpeciale() {
-        if (!capaciteUtilisee) {
-            System.out.println(getNom() + " active sa capacité spéciale : REegen 20 PV !");
-            augmenterPV(20);
-            capaciteUtilisee = true;
-        } else {
-            System.out.println("La capacité spéciale de " + getNom() + " a déjà été utilisée.");
+    public void activerCapaciteSpeciale(Canard adversaire) {
+        if (capaciteUtilisee) {
+            System.out.println(getNom() + " a deja utilise sa capacite speciale.");
+            return;
         }
+        if (getPointsEnergie() < 15) {
+            System.out.println(getNom() + " n'a pas assez d'energie pour activer sa capacite speciale.");
+            return;
+        }
+        pointsEnergie -= 15;
+        System.out.println(getNom() + " active sa capacité spéciale : REegen 20 PV !");
+        augmenterPV(20);
+        capaciteUtilisee = true;
     }
 }
+
+
+

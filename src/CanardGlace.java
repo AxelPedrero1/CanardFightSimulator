@@ -6,16 +6,22 @@ public class CanardGlace extends Canard {
     }
 
     /**
-     * Capacité spéciale CanardGlace : gèle un adversaire, lui faisant perdre un tour.
+     * Capacite speciale : gèle l'adversaire, l'empêchant d'agir pendant 2 tours.
+     * Coute 15 PE.
      */
     @Override
-    public void activerCapaciteSpeciale() {
-        if (!capaciteUtilisee) {
-            System.out.println(getNom() + " active sa capacité spéciale : Gèl !");
-            // À compléter : gestion d'un statut "gelé" dans la logique de combat
-            capaciteUtilisee = true;
-        } else {
-            System.out.println("La capacité spéciale de " + getNom() + " a déjà été utilisée.");
+    public void activerCapaciteSpeciale(Canard adversaire) {
+        if (capaciteUtilisee) {
+            System.out.println(getNom() + " a deja utilise sa capacite speciale.");
+            return;
         }
+        if (getPointsEnergie() < 15) {
+            System.out.println(getNom() + " n'a pas assez d'energie pour activer sa capacite speciale.");
+            return;
+        }
+        pointsEnergie -= 15;
+        System.out.println(getNom() + " active sa capacite speciale : il glace " + adversaire.getNom() + " pour 2 tours !");
+        adversaire.ajouterStatusEffect(StatusEffect.Type.GELE, 2);
+        capaciteUtilisee = true;
     }
 }

@@ -6,22 +6,29 @@ public class CanardFeu extends Canard {
     }
 
     /**
-     * Capacité spéciale CanardFeu : inflige des dégâts supplémentaires pendant un tour.
+     * Capacite speciale : augmente l'attaque de 10 points.
+     * Coute 15 PE.
      */
     @Override
-    public void activerCapaciteSpeciale() {
-        if (!capaciteUtilisee) {
-            System.out.println(getNom() + " active sa capacité spéciale : Feu supplémentaire !");
-            augmenterAttaque(10); // Augmente l'attaque de 10 points
-            capaciteUtilisee = true;
-        } else {
-            System.out.println("La capacité spéciale de " + getNom() + " a déjà été utilisée.");
+    public void activerCapaciteSpeciale(Canard adversaire) {
+        if (capaciteUtilisee) {
+            System.out.println(getNom() + " a deja utilise sa capacite speciale.");
+            return;
         }
+        if (getPointsEnergie() < 15) {
+            System.out.println(getNom() + " n'a pas assez d'energie pour activer sa capacite speciale.");
+            return;
+        }
+        pointsEnergie -= 15;
+        System.out.println(getNom() + " active sa capacite speciale : augmentation de l'attaque de 10 points !");
+        augmenterAttaque(10); // Augmente l'attaque de 10 points
+        capaciteUtilisee = true;
     }
 
     private void augmenterAttaque(int bonus) {
         int nouvelleAttaque = getPointsAttaque() + bonus;
-        System.out.println(getNom() + "  son attaque augmente de " + bonus + " pts (nvl attaque = " + nouvelleAttaque + ").");
+        System.out.println(getNom() + " voit son attaque augmenter de " + bonus + " points (nouvelle attaque = " + nouvelleAttaque + ").");
         setPointsAttaque(nouvelleAttaque);
     }
 }
+

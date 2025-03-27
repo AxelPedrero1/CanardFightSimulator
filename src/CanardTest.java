@@ -40,33 +40,40 @@ public class CanardTest {
     @Test
     public void testAttaquer() {
         // Given : un scénario de combat où chaque canard attaque un autre
-        // When : une attaque est effectuée en tenant compte des multiplicateurs
-        // Then : la cible perd le nombre de PV attendu
+        // When : une attaque est effectuée en tenant compte des multiplicateurs et de l'aléatoire
+        // Then : la cible perd le nombre de PV attendu (70 en attaque normale ou 40 en cas de critique)
 
-        // EX 1 : CanardEau attaque CanardFeu
-        // Eau > Feu => multiplicateur = 1.5 donc dégâts = 20 * 1.5 = 30
-        // PV attendus pour CanardFeu : 100 - 30 = 70
+        // EX 1 : CanardEau attaque CanardFeu (Eau > Feu)
         canardEau.attaquer(canardFeu);
-        assertEquals(70, canardFeu.getPointsDeVie());
+        int pvFeu = canardFeu.getPointsDeVie();
+        assertTrue("PV de CanardFeu doit être 70 (non critique) ou 40 (critique), mais était " + pvFeu,
+                pvFeu == 70 || pvFeu == 40);
 
         // EX 2 : CanardFeu attaque CanardGlace (Feu > Glace)
         canardFeu.attaquer(canardGlace);
-        assertEquals(70, canardGlace.getPointsDeVie());
+        int pvGlace = canardGlace.getPointsDeVie();
+        assertTrue("PV de CanardGlace doit être 70 (non critique) ou 40 (critique), mais était " + pvGlace,
+                pvGlace == 70 || pvGlace == 40);
 
         // EX 3 : CanardGlace attaque CanardVent (Glace > Vent)
         canardGlace.attaquer(canardVent);
-        assertEquals(70, canardVent.getPointsDeVie());
+        int pvVent = canardVent.getPointsDeVie();
+        assertTrue("PV de CanardVent doit être 70 (non critique) ou 40 (critique), mais était " + pvVent,
+                pvVent == 70 || pvVent == 40);
 
         // EX 4 : CanardVent attaque CanardEau (Vent > Eau)
         canardVent.attaquer(canardEau);
-        assertEquals(70, canardEau.getPointsDeVie());
+        int pvEau = canardEau.getPointsDeVie();
+        assertTrue("PV de CanardEau doit être 70 (non critique) ou 40 (critique), mais était " + pvEau,
+                pvEau == 70 || pvEau == 40);
     }
+
 
     @Test
     public void testSubirDegatsEtEstKO() {
         // Given : un canard avec 100 PV
         // When : on lui inflige 50 dégâts puis 60 dégâts supplémentaires
-        // Then : après 50 dégâts il ne doit pas être ko et après 110 dégâts au total, il doit être ko
+        // Then : après 50 dégâts il ne doit pas être KO et après 110 dégâts au total, il doit être KO
 
         canardEau.subirDegats(50);
         assertFalse("Le canard ne devrait pas être ko après 50 dégâts sur 100 PV", canardEau.estKO());
@@ -76,32 +83,30 @@ public class CanardTest {
 
     @Test
     public void testCapaciteSpeciale() {
-        // Given :  des canards de différents types avec des capacités spéciales distinctes
-        // When : on active la capacité spéciale de chaque canard
+        // Given : des canards de différents types avec des capacités spéciales distinctes
+        // When : on active la capacité spéciale de chaque canard avec un adversaire
         // Then : l'effet propre à chaque capacité doit être vérifié
 
         // Pour CanardEau : la capacité spéciale régénère 20 PV
         int pvInitial = canardEau.getPointsDeVie();
-        canardEau.activerCapaciteSpeciale();
+        canardEau.activerCapaciteSpeciale(canardEau); // L'adversaire n'est pas utilisé ici
         assertEquals("Capacité spéciale de CanardEau : PV augmentés de 20", pvInitial + 20, canardEau.getPointsDeVie());
 
         // Pour CanardFeu : la capacité spéciale augmente l'attaque de 10 points
         int paInitialFeu = canardFeu.getPointsAttaque();
-        canardFeu.activerCapaciteSpeciale();
+        canardFeu.activerCapaciteSpeciale(canardFeu); // L'adversaire n'est pas utilisé ici
         assertEquals("Capacité spéciale de CanardFeu : PA augmentés de 10", paInitialFeu + 10, canardFeu.getPointsAttaque());
 
         // Pour CanardVent : la capacité spéciale augmente l'attaque de 5 points
         int paInitialVent = canardVent.getPointsAttaque();
-        canardVent.activerCapaciteSpeciale();
-        assertEquals("Capacite spéciale de CanardVent : PA augmentés de 5", paInitialVent + 5, canardVent.getPointsAttaque());
+        canardVent.activerCapaciteSpeciale(canardVent); // L'adversaire n'est pas utilisé ici
+        assertEquals("Capacité spéciale de CanardVent : PA augmentés de 5", paInitialVent + 5, canardVent.getPointsAttaque());
 
-        // Pour CanardGlace : la capacité spéciale ne modifie pas d'attribut
-        // When : on active la capacité
-        // Then : aucune exception ne doit être lancée
+        // Pour CanardGlace : la capacité spéciale gèle un adversaire pendant 2 tours
         try {
-            canardGlace.activerCapaciteSpeciale();
+            canardGlace.activerCapaciteSpeciale(canardFeu);
         } catch (Exception e) {
-            fail("L'activation de la capacite spéciale de CanardGlace ne doit pas générer d'eception.");
+            fail("L'activation de la capacité spéciale de CanardGlace ne doit pas générer d'exception.");
         }
     }
 }

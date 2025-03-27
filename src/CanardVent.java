@@ -6,18 +6,23 @@ public class CanardVent extends Canard {
     }
 
     /**
-     * Capacité spéciale CanardVent : augmente temporairement sa vitesse d’attaque (2x attaque,
-     * 3x attaque, etc.).
+     * Capacite speciale : augmente l'attaque de 5 points.
+     * Coute 15 PE.
      */
     @Override
-    public void activerCapaciteSpeciale() {
-        if (!capaciteUtilisee) {
-            System.out.println(getNom() + " active sa capacité spéciale : Augmentation vitesse d'attaque !");
-            augmenterAttaque(5); // Augmente l'attaque de 5 points
-            capaciteUtilisee = true;
-        } else {
-            System.out.println("La capacité spéciale de " + getNom() + " a déjà été utilisée.");
+    public void activerCapaciteSpeciale(Canard adversaire) {
+        if (capaciteUtilisee) {
+            System.out.println(getNom() + " a deja utilise sa capacite speciale.");
+            return;
         }
+        if (getPointsEnergie() < 15) {
+            System.out.println(getNom() + " n'a pas assez d'energie pour activer sa capacite speciale.");
+            return;
+        }
+        pointsEnergie -= 15;
+        System.out.println(getNom() + " active sa capacite speciale : augmentation de l'attaque de 5 points !");
+        augmenterAttaque(5); // Augmente l'attaque de 5 points
+        capaciteUtilisee = true;
     }
 
     private void augmenterAttaque(int bonus) {
@@ -26,3 +31,4 @@ public class CanardVent extends Canard {
         setPointsAttaque(nouvelleAttaque);
     }
 }
+
