@@ -46,13 +46,22 @@ public class Main {
         System.out.println("\nCréation du canard " + numero);
         System.out.print("Entrez le nom du canard : ");
         String nom = scanner.nextLine();
-        System.out.print("Choisissez le type (Eau, Feu, Glace, Vent) : ");
+        System.out.print("Choisissez le type (Eau, Feu, Glace, Vent, Electrique, Toxique, Sol) : ");
         String typeStr = scanner.nextLine().toUpperCase();
         TypeCanard type = TypeCanard.valueOf(typeStr);
-        System.out.print("Entrez les points de vie : ");
-        int pv = scanner.nextInt();
-        System.out.print("Entrez les points d'attaque : ");
-        int pa = scanner.nextInt();
+
+        int pv;
+        do {
+            System.out.print("Entrez les points de vie (entre 50 et 200) : ");
+            pv = scanner.nextInt();
+        } while (pv < 50 || pv > 200);
+
+        int pa;
+        do {
+            System.out.print("Entrez les points d'attaque (entre 10 et 50) : ");
+            pa = scanner.nextInt();
+        } while (pa < 10 || pa > 50);
+
         scanner.nextLine(); // Consomme la nouvelle ligne
 
         switch (type) {
@@ -64,6 +73,12 @@ public class Main {
                 return new CanardGlace(nom, pv, pa);
             case VENT:
                 return new CanardVent(nom, pv, pa);
+            case ELECTRIQUE:
+                return new CanardElectrique(nom, pv, pa);
+            case TOXIQUE:
+                return new CanardToxique(nom, pv, pa);
+            case SOL:
+                return new CanardSol(nom, pv, pa);
             default:
                 return null;
         }
@@ -72,6 +87,8 @@ public class Main {
     public static void simulerBataille(Canard c1, Canard c2, Scanner scanner) {
         System.out.println("\nDébut de la bataille entre " + c1.getNom() + " et " + c2.getNom());
         int tour = 1;
+        // Création d'une potion à utiliser pendant le combat
+        Potion potion = new Potion("Potion de Soin", 20, 20);
         while (!c1.estKO() && !c2.estKO()) {
             System.out.println("\nTour " + tour);
 
@@ -81,6 +98,19 @@ public class Main {
 
             // Si un canard est KO après les effets, on arrête la bataille
             if (c1.estKO() || c2.estKO()) break;
+
+            // Possibilité d'utiliser une potion
+            System.out.print("Voulez-vous utiliser une potion sur " + c1.getNom() + " ? (oui/non) : ");
+            String rep = scanner.nextLine();
+            if (rep.equalsIgnoreCase("oui")) {
+                potion.utiliser(c1);
+            }
+
+            System.out.print("Voulez-vous utiliser une potion sur " + c2.getNom() + " ? (oui/non) : ");
+            rep = scanner.nextLine();
+            if (rep.equalsIgnoreCase("oui")) {
+                potion.utiliser(c2);
+            }
 
             // c1 attaque c2
             c1.attaquer(c2);
@@ -112,5 +142,16 @@ public class Main {
             tour++;
         }
         System.out.println("Bataille terminée !");
+
+        // Evolution : le gagnant évolue
+        if (c1.estKO() && !c2.estKO()) {
+            System.out.println(c2.getNom() + " a gagné !");
+            c2.evoluer();
+        } else if (c2.estKO() && !c1.estKO()) {
+            System.out.println(c1.getNom() + " a gagné !");
+            c1.evoluer();
+        } else {
+            System.out.println("Match nul !");
+        }
     }
 }

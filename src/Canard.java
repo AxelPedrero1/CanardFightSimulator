@@ -169,4 +169,22 @@ public abstract class Canard {
         System.out.println(nom + " est affecte par " + type + " pendant " + duree + " tours.");
     }
 
+    /**
+     * Permet a un canard d'évoluer lorsque qu'il gagne le ccombat.
+     */
+    public void evoluer() {
+        System.out.println(nom + " a gagné le combat et evolue !");
+        setPointsAttaque(getPointsAttaque() + 5);
+        augmenterPV(10);
+    }
+
+    /**
+     * Permet a un canard d'augmenter les PE.
+     */
+    public void augmenterEnergie(int points) {
+        this.pointsEnergie += points;
+        System.out.println(nom + " regagne " + points + " PE et a maintenant " + pointsEnergie + " PE.");
+    }
+
+
 }

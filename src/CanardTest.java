@@ -158,4 +158,32 @@ public class CanardTest {
         canardFeu.appliquerEffets();
         assertTrue("Après expiration de l'effet GELE, le canard doit pouvoir agir", canardFeu.peutAgir());
     }
+
+    // Tests pour la personnalisation et la progression
+
+    @Test
+    public void testEvolution() {
+        // Given : un canard avec 100 PV et 20 PA
+        int pvInitial = canardFeu.getPointsDeVie();
+        int paInitial = canardFeu.getPointsAttaque();
+        // When : le canard évolue après une victoire
+        canardFeu.evoluer();
+        // Then : ses PV augmentent de 10 et son PA augmentent de 5
+        assertEquals("Après évolution, les PV doivent augmenter de 10", pvInitial + 10, canardFeu.getPointsDeVie());
+        assertEquals("Après évolution, le PA doit augmenter de 5", paInitial + 5, canardFeu.getPointsAttaque());
+    }
+
+    @Test
+    public void testPotionUtilisation() {
+        // Given : un canard avec 100 PV et 100 PE
+        int pvInitial = canardEau.getPointsDeVie();
+        int peInitial = canardEau.getPointsEnergie();
+        // And une potion qui restaure 20 PV et 20 PE
+        Potion potion = new Potion("Potion de Soin", 20, 20);
+        // When : on utilise la potion sur le canard
+        potion.utiliser(canardEau);
+        // Then : le canard gagne 20 PV et 20 PE
+        assertEquals("Après utilisation de la potion, les PV doivent augmenter de 20", pvInitial + 20, canardEau.getPointsDeVie());
+        assertEquals("Après utilisation de la potion, les PE doivent augmenter de 20", peInitial + 20, canardEau.getPointsEnergie());
+    }
 }
