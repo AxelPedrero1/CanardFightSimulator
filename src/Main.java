@@ -16,7 +16,7 @@ public class Main {
             System.out.println("3. Quitter");
             System.out.print("Votre choix : ");
             int choix = scanner.nextInt();
-            scanner.nextLine(); // Consommer la nouvelle ligne
+            scanner.nextLine(); // Consomme la nouvelle ligne
 
             switch (choix) {
                 case 1:
@@ -53,7 +53,7 @@ public class Main {
         int pv = scanner.nextInt();
         System.out.print("Entrez les points d'attaque : ");
         int pa = scanner.nextInt();
-        scanner.nextLine(); // Consommer la nouvelle ligne
+        scanner.nextLine(); // Consomme la nouvelle ligne
 
         switch (type) {
             case EAU:
@@ -74,6 +74,14 @@ public class Main {
         int tour = 1;
         while (!c1.estKO() && !c2.estKO()) {
             System.out.println("\nTour " + tour);
+
+            // Applique les effets de statut sur chaque canard au début du tour
+            c1.appliquerEffets();
+            c2.appliquerEffets();
+
+            // Si un canard est KO après les effets, on arrête la bataille
+            if (c1.estKO() || c2.estKO()) break;
+
             // c1 attaque c2
             c1.attaquer(c2);
             if (c2.estKO()) {
@@ -87,7 +95,7 @@ public class Main {
                 break;
             }
 
-            // Proposer aux joueurs d'activer leur capacité spéciale
+            // Propose aux joueurs d'activer leur capacité spéciale
             System.out.print("Activer la capacité spéciale de " + c1.getNom() + " ? (oui/non) : ");
             String rep1 = scanner.nextLine();
             if (rep1.equalsIgnoreCase("oui")) {

@@ -68,7 +68,6 @@ public class CanardTest {
                 pvEau == 70 || pvEau == 40);
     }
 
-
     @Test
     public void testSubirDegatsEtEstKO() {
         // Given : un canard avec 100 PV
@@ -108,5 +107,32 @@ public class CanardTest {
         } catch (Exception e) {
             fail("L'activation de la capacité spéciale de CanardGlace ne doit pas générer d'exception.");
         }
+    }
+
+    @Test
+    public void testStatusEffects() {
+        // Given : un canard avec 100 PV
+        // When : on ajoute un effet BRULE et on applique les effets
+        // Then : le canard perd 5 PV pour l'effet BRULE
+
+        int pvInitial = canardEau.getPointsDeVie();
+        canardEau.ajouterStatusEffect(StatusEffect.Type.BRULE, 1);
+        canardEau.appliquerEffets();
+        assertEquals("Après effet BRULE, PV doivent être réduits de 5", pvInitial - 5, canardEau.getPointsDeVie());
+
+        // Given : un canard sans effet et on ajoute un effet GELE pour 2 tours
+        // When : on vérifie que le canard ne peut pas agir pendant l'effet GELE
+        canardFeu.ajouterStatusEffect(StatusEffect.Type.GELE, 2);
+        assertFalse("Avec effet GELE, le canard ne doit pas pouvoir agir", canardFeu.peutAgir());
+
+        // When : on applique les effets une première fois (1 tour passé)
+        canardFeu.appliquerEffets();
+        // Then : le canard ne peut toujours pas agir car l'effet n'est pas expiré
+        assertFalse("Après 1 tour, effet GELE toujours actif", canardFeu.peutAgir());
+
+        // When : on applique les effets une seconde fois (l'effet expire)
+        canardFeu.appliquerEffets();
+        // Then : le canard doit pouvoir agir une fois l'effet GELE expiré
+        assertTrue("Après expiration de l'effet GELE, le canard doit pouvoir agir", canardFeu.peutAgir());
     }
 }
