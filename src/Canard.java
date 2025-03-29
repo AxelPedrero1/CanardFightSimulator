@@ -49,6 +49,7 @@ public abstract class Canard {
      * - BRULE : le canard perd 5 PV à chaque tour.
      * - GELE : le canard ne peut pas agir ce tour.
      * - PARALYSE : le canard a 50% de chance de ne pas agir.
+     * - POISON :  le canard perd 5 PV.
      */
     public void appliquerEffets() {
         Iterator<StatusEffect> it = statusEffects.iterator();
@@ -65,6 +66,10 @@ public abstract class Canard {
                 case PARALYSE:
                     System.out.println(nom + " est paralyse, 50% de chance de ne pas agir.");
                     break;
+                case POISON:
+                    System.out.println(nom + " est empoisonne et perd 5 PV.");
+                    this.subirDegats(5);
+                    break;
             }
             effet.decrementTurn();
             if (effet.isExpired()) {
@@ -73,6 +78,7 @@ public abstract class Canard {
             }
         }
     }
+
 
     /**
      * Verifie si le canard peut agir ce tour en fonction des effets de statut.

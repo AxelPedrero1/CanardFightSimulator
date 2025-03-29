@@ -1,6 +1,6 @@
 public class StatusEffect {
     public enum Type {
-        BRULE, GELE, PARALYSE
+        BRULE, GELE, PARALYSE ,POISON
     }
 
     private Type type;

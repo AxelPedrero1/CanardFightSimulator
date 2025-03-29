@@ -7,14 +7,20 @@ public class CanardTest {
     private Canard canardFeu;
     private Canard canardGlace;
     private Canard canardVent;
+    private Canard canardElectrique;
+    private Canard canardToxique;
+    private Canard canardSol;
 
     @Before
     public void setUp() {
-        // Given : 4 canards initialisés avec 100 PV et 20 PA chacun
+        // Given : 7 canards initialisés avec 100 PV et 20 PA chacun
         canardEau = new CanardEau("CanardEau", 100, 20);
         canardFeu = new CanardFeu("CanardFeu", 100, 20);
         canardGlace = new CanardGlace("CanardGlace", 100, 20);
         canardVent = new CanardVent("CanardVent", 100, 20);
+        canardElectrique = new CanardElectrique("CanardElectrique", 100, 20);
+        canardToxique = new CanardToxique("CanardToxique", 100, 20);
+        canardSol = new CanardSol("CanardSol", 100, 20);
     }
 
     @Test
@@ -23,18 +29,23 @@ public class CanardTest {
         // When : on calcule le multiplicateur via la méthode getMultiplicateur
         // Then : le résultat doit correspondre aux interactions attendues
 
-        // Cas 1 : Eau > Feu doit donner un multiplicateur de 1.5
+        // Cas pour les types de base
         assertEquals(1.5, TypeCanard.getMultiplicateur(TypeCanard.EAU, TypeCanard.FEU), 0.001);
-        // Cas 2 : Feu > Glace doit donner un multiplicateur de 1.5
         assertEquals(1.5, TypeCanard.getMultiplicateur(TypeCanard.FEU, TypeCanard.GLACE), 0.001);
-        // Cas 3 : Glace > Vent doit donner un multiplicateur de 1.5
         assertEquals(1.5, TypeCanard.getMultiplicateur(TypeCanard.GLACE, TypeCanard.VENT), 0.001);
-        // Cas 4 : Vent > Eau doit donner un multiplicateur de 1.5
         assertEquals(1.5, TypeCanard.getMultiplicateur(TypeCanard.VENT, TypeCanard.EAU), 0.001);
-        // Cas 5 : Feu attaquant Eau doit donner un multiplicateur de 0.5
         assertEquals(0.5, TypeCanard.getMultiplicateur(TypeCanard.FEU, TypeCanard.EAU), 0.001);
-        // Cas 6 : Même type doit donner un multiplicateur de 1.0
         assertEquals(1.0, TypeCanard.getMultiplicateur(TypeCanard.EAU, TypeCanard.EAU), 0.001);
+
+        // Nouveaux types
+        // Cas : CanardElectrique attaque n'importe quel type doit donner 1.0
+        assertEquals(1.0, TypeCanard.getMultiplicateur(TypeCanard.ELECTRIQUE, TypeCanard.FEU), 0.001);
+        assertEquals(1.0, TypeCanard.getMultiplicateur(TypeCanard.ELECTRIQUE, TypeCanard.TOXIQUE), 0.001);
+
+        // Cas : Attaquant Eau contre cible Sol doit donner 1.5
+        assertEquals(1.5, TypeCanard.getMultiplicateur(TypeCanard.EAU, TypeCanard.SOL), 0.001);
+        // Cas : Attaquant Feu contre cible Sol doit donner 0.5
+        assertEquals(0.5, TypeCanard.getMultiplicateur(TypeCanard.FEU, TypeCanard.SOL), 0.001);
     }
 
     @Test
@@ -107,6 +118,22 @@ public class CanardTest {
         } catch (Exception e) {
             fail("L'activation de la capacité spéciale de CanardGlace ne doit pas générer d'exception.");
         }
+
+        // Pour CanardElectrique : vérifier que l'énergie diminue de 15 PE
+        int peInitialElectrique = canardElectrique.getPointsEnergie();
+        canardElectrique.activerCapaciteSpeciale(canardElectrique);
+        assertEquals("Capacité spéciale de CanardElectrique : PE diminués de 15", peInitialElectrique - 15, canardElectrique.getPointsEnergie());
+
+        // Pour CanardToxique : vérifier que l'adversaire est empoisonné (perte de 5 PV par tour)
+        int pvInitialAdversaire = canardFeu.getPointsDeVie();
+        canardToxique.activerCapaciteSpeciale(canardFeu);
+        canardFeu.appliquerEffets(); // Application du POISON
+        assertEquals("Après poison, PV de l'adversaire doivent être réduits de 5", pvInitialAdversaire - 5, canardFeu.getPointsDeVie());
+
+        // Pour CanardSol : la capacité spéciale augmente les PV de 10
+        int pvInitialSol = canardSol.getPointsDeVie();
+        canardSol.activerCapaciteSpeciale(canardSol);
+        assertEquals("Capacité spéciale de CanardSol : PV augmentés de 10", pvInitialSol + 10, canardSol.getPointsDeVie());
     }
 
     @Test
@@ -120,19 +147,15 @@ public class CanardTest {
         canardEau.appliquerEffets();
         assertEquals("Après effet BRULE, PV doivent être réduits de 5", pvInitial - 5, canardEau.getPointsDeVie());
 
-        // Given : un canard sans effet et on ajoute un effet GELE pour 2 tours
-        // When : on vérifie que le canard ne peut pas agir pendant l'effet GELE
+        // Given : un canard auquel on ajoute un effet GELE pour 2 tours
+        // When : on vérifie qu'il ne peut pas agir pendant l'effet GELE
         canardFeu.ajouterStatusEffect(StatusEffect.Type.GELE, 2);
         assertFalse("Avec effet GELE, le canard ne doit pas pouvoir agir", canardFeu.peutAgir());
-
-        // When : on applique les effets une première fois (1 tour passé)
+        // When : on applique les effets une première fois (1er tour)
         canardFeu.appliquerEffets();
-        // Then : le canard ne peut toujours pas agir car l'effet n'est pas expiré
         assertFalse("Après 1 tour, effet GELE toujours actif", canardFeu.peutAgir());
-
         // When : on applique les effets une seconde fois (l'effet expire)
         canardFeu.appliquerEffets();
-        // Then : le canard doit pouvoir agir une fois l'effet GELE expiré
         assertTrue("Après expiration de l'effet GELE, le canard doit pouvoir agir", canardFeu.peutAgir());
     }
 }
