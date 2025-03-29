@@ -1,4 +1,6 @@
-![Diagramme de classe](images/DiagrammeClasse.png)
+Diagramme de classe avant de débuter le projet :![Diagramme de classe](images/DiagrammeClasse.png)
+
+Diagramme de classie a la fin du projet: ![Diagramme de classe final](images/DiagrammeClasseFinal.png)
 
 
 # Questionnements sur la modélisation
