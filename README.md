@@ -22,3 +22,17 @@ Le principal défi est de gérer la complexité qui augmente à chaque ajout. Qu
 
 
 ## Réalisations bonus : Tous les bonus ont été réalisé.
+
+# Description des Choix Techniques
+
+1. Conception OO  
+La classe Canard est abstraite et regroupe les attributs et methodes communes (nom, PV, PA, type, PE). Les sous-classes (CanardEau, CanardFeu, etc.) heritent de cette classe et implementent leur propre capacite speciale.
+
+2. Gestion des types  
+L'enum TypeCanard definit les differents types et contient la methode getMultiplicateur pour calculer les interactions (forces/faiblesses) entre canards.
+
+3. Effets de statut  
+La classe StatusEffect permet de gerer les effets comme brule, gele, paralys, et poison. Cela rend le systeme modulaire et facilite l'ajout de nouveaux effets.
+
+4. Tests
+Test réalisés en TDD tout au long du developpement.
