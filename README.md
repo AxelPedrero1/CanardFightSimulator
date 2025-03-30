@@ -1,4 +1,6 @@
-![Diagramme de classe](images/DiagrammeClasse.png)
+Diagramme de classe avant de débuter le projet :![Diagramme de classe](images/DiagrammeClasse.png)
+
+Diagramme de classie a la fin du projet: ![Diagramme de classe final](images/DiagrammeClasseFinal.png)
 
 
 # Questionnements sur la modélisation
@@ -19,4 +21,18 @@ Utiliser une classe ou une interface supplementaire pour gerer les capacites spe
 Le principal défi est de gérer la complexité qui augmente à chaque ajout. Quand on ajoute de nouveaux types ou capacités les interactions (forces, faiblesses, statuts) deviennent plus difficiles à organiser. Il faut que le modèle reste flexible et simple ce qui peut nécessiter l'utilisation de design patterns comme le State Pattern. Il faut aussi veiller à ce que l'interface reste claire et que les tests unitaires couvrent bien les nouvelles fonctionnalités
 
 
-## Réalisations bonus : Effets de statut, Points d’énergie (PE), Attaques critiques 
+## Réalisations bonus : Tous les bonus ont été réalisé.
+
+# Description des Choix Techniques
+
+1. Conception OO  
+La classe Canard est abstraite et regroupe les attributs et methodes communes (nom, PV, PA, type, PE). Les sous-classes (CanardEau, CanardFeu, etc.) heritent de cette classe et implementent leur propre capacite speciale.
+
+2. Gestion des types  
+L'enum TypeCanard definit les differents types et contient la methode getMultiplicateur pour calculer les interactions (forces/faiblesses) entre canards.
+
+3. Effets de statut  
+La classe StatusEffect permet de gerer les effets comme brule, gele, paralys, et poison. Cela rend le systeme modulaire et facilite l'ajout de nouveaux effets.
+
+4. Tests
+Test réalisés en TDD tout au long du developpement.
