@@ -138,7 +138,7 @@ public class Main {
             System.out.print("Activer la capacité spéciale de " + c2.getNom() + " ? (oui/non) : ");
             String rep2 = scanner.nextLine();
             if (rep2.equalsIgnoreCase("oui")) {
-                c1.activerCapaciteSpeciale(c1);
+                c2.activerCapaciteSpeciale(c1);
             }
 
             tour++;
