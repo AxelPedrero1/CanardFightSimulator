@@ -6,10 +6,10 @@ Diagramme de classie a la fin du projet: ![Diagramme de classe final](images/Dia
 # Questionnements sur la modélisation
 
 ## 1. Quelles classes pourraient être abstraites ?
-Je pense que la classe main.java.org.canard.Canard devrait etre abstraite car elle regroupe tous les attributs et methodes communes a tous les canards (nom, points de vie, points d'attaque, type, etc.). En la rendant abstraite on oblige les classes filles (main.java.org.canard.CanardEau, main.java.org.canard.CanardFeu, main.java.org.canard.CanardGlace, main.java.org.canard.CanardVent) a implementer leur propre version de certaines methodes notamment activerCapaciteSpeciale(). Cela permet de mieux definir le comportement spécifique de chaque type de canard
+Je pense que la classe Canard devrait etre abstraite car elle regroupe tous les attributs et methodes communes a tous les canards (nom, points de vie, points d'attaque, type, etc.). En la rendant abstraite on oblige les classes filles (CanardEau, CanardFeu, CanardGlace, CanardVent) a implementer leur propre version de certaines methodes notamment activerCapaciteSpeciale(). Cela permet de mieux definir le comportement spécifique de chaque type de canard
 
 ## 2.Quels comportements communs pourraient être définis dans une interface ?
-On pourrait creer une interface par exemple Combattant qui regroupe des methodes comme attaquer(),subirDegats() et estKO(). Toutes les entites qui doivent participer aux combats meme si elles ne font pas partie de la hierarchie de main.java.org.canard.Canard devront implementer ces methodes. Cela uniformise le comportement des entites en combat et facilite l'extension du projet
+On pourrait creer une interface par exemple Combattant qui regroupe des methodes comme attaquer(),subirDegats() et estKO(). Toutes les entites qui doivent participer aux combats meme si elles ne font pas partie de la hierarchie de Canard devront implementer ces methodes. Cela uniformise le comportement des entites en combat et facilite l'extension du projet
 
 ## 3. Comment représenter un changement de statut (par exemple,brûlé ou paralysé) dans la modélisation ?
 Une solution serait de creer une énumération (enum) appelee Statut qui definirait les differents etats possibles (NORMAL, BRULE, PARALYSE, etc.). Chaque canard pourrait alors avoir un attribut indiquant son statut actuel. Pour une approche plus evoluée, on pourrait utiliser le State Pattern (https://refactoring.guru/design-patterns/state/java/example) afin de modifier dynamiquement le comportement du canard en fonction de son statut (par exe reduire les pts de vie a chaque tour s'il est brule ou l'empecher d'agir s'il est paralyse)
@@ -35,4 +35,4 @@ L'enum TypeCanard definit les differents types et contient la methode getMultipl
 La classe StatusEffect permet de gerer les effets comme brule, gele, paralys, et poison. Cela rend le systeme modulaire et facilite l'ajout de nouveaux effets.
 
 4. Tests
-Test réalisés en TDD tout au long du developpement.
+Tests réalisés en TDD tout au long du developpement.
