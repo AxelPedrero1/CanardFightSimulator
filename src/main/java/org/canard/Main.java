@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Bienvenue dans main.java.org.canard.Canard Fighter Simulator !");
+        System.out.println("Bienvenue dans Canard Fighter Simulator !");
 
         boolean quitter = false;
         Canard canard1 = null;
