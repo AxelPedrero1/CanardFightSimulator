@@ -1,3 +1,5 @@
+package main.java.org.canard;
+
 public abstract class Item {
     private String nom;
 

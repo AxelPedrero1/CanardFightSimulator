@@ -1,3 +1,5 @@
+package main.java.org.canard;
+
 public enum TypeCanard {
     EAU, FEU, GLACE, VENT, ELECTRIQUE, TOXIQUE, SOL;
 

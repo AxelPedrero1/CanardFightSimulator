@@ -1,4 +1,8 @@
+package test.java.org.canards;
+
 import static org.junit.Assert.*;
+
+import main.java.org.canard.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,13 +18,13 @@ public class CanardTest {
     @Before
     public void setUp() {
         // Given : 7 canards initialisés avec 100 PV et 20 PA chacun
-        canardEau = new CanardEau("CanardEau", 100, 20);
-        canardFeu = new CanardFeu("CanardFeu", 100, 20);
-        canardGlace = new CanardGlace("CanardGlace", 100, 20);
-        canardVent = new CanardVent("CanardVent", 100, 20);
-        canardElectrique = new CanardElectrique("CanardElectrique", 100, 20);
-        canardToxique = new CanardToxique("CanardToxique", 100, 20);
-        canardSol = new CanardSol("CanardSol", 100, 20);
+        canardEau = new CanardEau("main.java.org.canard.CanardEau", 100, 20);
+        canardFeu = new CanardFeu("main.java.org.canard.CanardFeu", 100, 20);
+        canardGlace = new CanardGlace("main.java.org.canard.CanardGlace", 100, 20);
+        canardVent = new CanardVent("main.java.org.canard.CanardVent", 100, 20);
+        canardElectrique = new CanardElectrique("main.java.org.canard.CanardElectrique", 100, 20);
+        canardToxique = new CanardToxique("main.java.org.canard.CanardToxique", 100, 20);
+        canardSol = new CanardSol("main.java.org.canard.CanardSol", 100, 20);
     }
 
     @Test
@@ -38,7 +42,7 @@ public class CanardTest {
         assertEquals(1.0, TypeCanard.getMultiplicateur(TypeCanard.EAU, TypeCanard.EAU), 0.001);
 
         // Nouveaux types
-        // Cas : CanardElectrique attaque n'importe quel type doit donner 1.0
+        // Cas : main.java.org.canard.CanardElectrique attaque n'importe quel type doit donner 1.0
         assertEquals(1.0, TypeCanard.getMultiplicateur(TypeCanard.ELECTRIQUE, TypeCanard.FEU), 0.001);
         assertEquals(1.0, TypeCanard.getMultiplicateur(TypeCanard.ELECTRIQUE, TypeCanard.TOXIQUE), 0.001);
 
@@ -54,28 +58,28 @@ public class CanardTest {
         // When : une attaque est effectuée en tenant compte des multiplicateurs et de l'aléatoire
         // Then : la cible perd le nombre de PV attendu (70 en attaque normale ou 40 en cas de critique)
 
-        // EX 1 : CanardEau attaque CanardFeu (Eau > Feu)
+        // EX 1 : main.java.org.canard.CanardEau attaque main.java.org.canard.CanardFeu (Eau > Feu)
         canardEau.attaquer(canardFeu);
         int pvFeu = canardFeu.getPointsDeVie();
-        assertTrue("PV de CanardFeu doit être 70 (non critique) ou 40 (critique), mais était " + pvFeu,
+        assertTrue("PV de main.java.org.canard.CanardFeu doit être 70 (non critique) ou 40 (critique), mais était " + pvFeu,
                 pvFeu == 70 || pvFeu == 40);
 
-        // EX 2 : CanardFeu attaque CanardGlace (Feu > Glace)
+        // EX 2 : main.java.org.canard.CanardFeu attaque main.java.org.canard.CanardGlace (Feu > Glace)
         canardFeu.attaquer(canardGlace);
         int pvGlace = canardGlace.getPointsDeVie();
-        assertTrue("PV de CanardGlace doit être 70 (non critique) ou 40 (critique), mais était " + pvGlace,
+        assertTrue("PV de main.java.org.canard.CanardGlace doit être 70 (non critique) ou 40 (critique), mais était " + pvGlace,
                 pvGlace == 70 || pvGlace == 40);
 
-        // EX 3 : CanardGlace attaque CanardVent (Glace > Vent)
+        // EX 3 : main.java.org.canard.CanardGlace attaque main.java.org.canard.CanardVent (Glace > Vent)
         canardGlace.attaquer(canardVent);
         int pvVent = canardVent.getPointsDeVie();
-        assertTrue("PV de CanardVent doit être 70 (non critique) ou 40 (critique), mais était " + pvVent,
+        assertTrue("PV de main.java.org.canard.CanardVent doit être 70 (non critique) ou 40 (critique), mais était " + pvVent,
                 pvVent == 70 || pvVent == 40);
 
-        // EX 4 : CanardVent attaque CanardEau (Vent > Eau)
+        // EX 4 : main.java.org.canard.CanardVent attaque main.java.org.canard.CanardEau (Vent > Eau)
         canardVent.attaquer(canardEau);
         int pvEau = canardEau.getPointsDeVie();
-        assertTrue("PV de CanardEau doit être 70 (non critique) ou 40 (critique), mais était " + pvEau,
+        assertTrue("PV de main.java.org.canard.CanardEau doit être 70 (non critique) ou 40 (critique), mais était " + pvEau,
                 pvEau == 70 || pvEau == 40);
     }
 
@@ -97,43 +101,43 @@ public class CanardTest {
         // When : on active la capacité spéciale de chaque canard avec un adversaire
         // Then : l'effet propre à chaque capacité doit être vérifié
 
-        // Pour CanardEau : la capacité spéciale régénère 20 PV
+        // Pour main.java.org.canard.CanardEau : la capacité spéciale régénère 20 PV
         int pvInitial = canardEau.getPointsDeVie();
         canardEau.activerCapaciteSpeciale(canardEau); // L'adversaire n'est pas utilisé ici
-        assertEquals("Capacité spéciale de CanardEau : PV augmentés de 20", pvInitial + 20, canardEau.getPointsDeVie());
+        assertEquals("Capacité spéciale de main.java.org.canard.CanardEau : PV augmentés de 20", pvInitial + 20, canardEau.getPointsDeVie());
 
-        // Pour CanardFeu : la capacité spéciale augmente l'attaque de 10 points
+        // Pour main.java.org.canard.CanardFeu : la capacité spéciale augmente l'attaque de 10 points
         int paInitialFeu = canardFeu.getPointsAttaque();
         canardFeu.activerCapaciteSpeciale(canardFeu); // L'adversaire n'est pas utilisé ici
-        assertEquals("Capacité spéciale de CanardFeu : PA augmentés de 10", paInitialFeu + 10, canardFeu.getPointsAttaque());
+        assertEquals("Capacité spéciale de main.java.org.canard.CanardFeu : PA augmentés de 10", paInitialFeu + 10, canardFeu.getPointsAttaque());
 
-        // Pour CanardVent : la capacité spéciale augmente l'attaque de 5 points
+        // Pour main.java.org.canard.CanardVent : la capacité spéciale augmente l'attaque de 5 points
         int paInitialVent = canardVent.getPointsAttaque();
         canardVent.activerCapaciteSpeciale(canardVent); // L'adversaire n'est pas utilisé ici
-        assertEquals("Capacité spéciale de CanardVent : PA augmentés de 5", paInitialVent + 5, canardVent.getPointsAttaque());
+        assertEquals("Capacité spéciale de main.java.org.canard.CanardVent : PA augmentés de 5", paInitialVent + 5, canardVent.getPointsAttaque());
 
-        // Pour CanardGlace : la capacité spéciale gèle un adversaire pendant 2 tours
+        // Pour main.java.org.canard.CanardGlace : la capacité spéciale gèle un adversaire pendant 2 tours
         try {
             canardGlace.activerCapaciteSpeciale(canardFeu);
         } catch (Exception e) {
-            fail("L'activation de la capacité spéciale de CanardGlace ne doit pas générer d'exception.");
+            fail("L'activation de la capacité spéciale de main.java.org.canard.CanardGlace ne doit pas générer d'exception.");
         }
 
-        // Pour CanardElectrique : vérifier que l'énergie diminue de 15 PE
+        // Pour main.java.org.canard.CanardElectrique : vérifier que l'énergie diminue de 15 PE
         int peInitialElectrique = canardElectrique.getPointsEnergie();
         canardElectrique.activerCapaciteSpeciale(canardElectrique);
-        assertEquals("Capacité spéciale de CanardElectrique : PE diminués de 15", peInitialElectrique - 15, canardElectrique.getPointsEnergie());
+        assertEquals("Capacité spéciale de main.java.org.canard.CanardElectrique : PE diminués de 15", peInitialElectrique - 15, canardElectrique.getPointsEnergie());
 
-        // Pour CanardToxique : vérifier que l'adversaire est empoisonné (perte de 5 PV par tour)
+        // Pour main.java.org.canard.CanardToxique : vérifier que l'adversaire est empoisonné (perte de 5 PV par tour)
         int pvInitialAdversaire = canardFeu.getPointsDeVie();
         canardToxique.activerCapaciteSpeciale(canardFeu);
         canardFeu.appliquerEffets(); // Application du POISON
         assertEquals("Après poison, PV de l'adversaire doivent être réduits de 5", pvInitialAdversaire - 5, canardFeu.getPointsDeVie());
 
-        // Pour CanardSol : la capacité spéciale augmente les PV de 10
+        // Pour main.java.org.canard.CanardSol : la capacité spéciale augmente les PV de 10
         int pvInitialSol = canardSol.getPointsDeVie();
         canardSol.activerCapaciteSpeciale(canardSol);
-        assertEquals("Capacité spéciale de CanardSol : PV augmentés de 10", pvInitialSol + 10, canardSol.getPointsDeVie());
+        assertEquals("Capacité spéciale de main.java.org.canard.CanardSol : PV augmentés de 10", pvInitialSol + 10, canardSol.getPointsDeVie());
     }
 
     @Test
@@ -179,7 +183,7 @@ public class CanardTest {
         int pvInitial = canardEau.getPointsDeVie();
         int peInitial = canardEau.getPointsEnergie();
         // And une potion qui restaure 20 PV et 20 PE
-        Potion potion = new Potion("Potion de Soin", 20, 20);
+        Potion potion = new Potion("main.java.org.canard.Potion de Soin", 20, 20);
         // When : on utilise la potion sur le canard
         potion.utiliser(canardEau);
         // Then : le canard gagne 20 PV et 20 PE

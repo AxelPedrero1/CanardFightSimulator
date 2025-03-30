@@ -1,12 +1,14 @@
-public class CanardSol extends Canard {
+package main.java.org.canard;
+
+public class CanardGlace extends Canard {
     private boolean capaciteUtilisee = false;
 
-    public CanardSol(String nom, int pointsDeVie, int pointsAttaque) {
-        super(nom, pointsDeVie, pointsAttaque, TypeCanard.SOL);
+    public CanardGlace(String nom, int pointsDeVie, int pointsAttaque) {
+        super(nom, pointsDeVie, pointsAttaque, TypeCanard.GLACE);
     }
 
     /**
-     * Capacite speciale : augmente la defense en augmentant les PV de 10.
+     * Capacite speciale : gèle l'adversaire, l'empêchant d'agir pendant 2 tours.
      * Coute 15 PE.
      */
     @Override
@@ -20,8 +22,8 @@ public class CanardSol extends Canard {
             return;
         }
         pointsEnergie -= 15;
-        System.out.println(getNom() + " active sa capacite speciale : augmentation de PV de 10 !");
-        augmenterPV(10);
+        System.out.println(getNom() + " active sa capacite speciale : il glace " + adversaire.getNom() + " pour 2 tours !");
+        adversaire.ajouterStatusEffect(StatusEffect.Type.GELE, 2);
         capaciteUtilisee = true;
     }
 }

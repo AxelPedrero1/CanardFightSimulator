@@ -1,3 +1,5 @@
+package main.java.org.canard;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -147,7 +149,7 @@ public abstract class Canard {
 
     /**
      * Permet à un canard dactiver sa capacite
-     * Dans certains cas, comme pour CanardGlace, il faut pouvoir cibler un adversaire.
+     * Dans certains cas, comme pour main.java.org.canard.CanardGlace, il faut pouvoir cibler un adversaire.
      */
     public abstract void activerCapaciteSpeciale(Canard adversaire);
 

@@ -1,12 +1,14 @@
-public class CanardGlace extends Canard {
+package main.java.org.canard;
+
+public class CanardToxique extends Canard {
     private boolean capaciteUtilisee = false;
 
-    public CanardGlace(String nom, int pointsDeVie, int pointsAttaque) {
-        super(nom, pointsDeVie, pointsAttaque, TypeCanard.GLACE);
+    public CanardToxique(String nom, int pointsDeVie, int pointsAttaque) {
+        super(nom, pointsDeVie, pointsAttaque, TypeCanard.TOXIQUE);
     }
 
     /**
-     * Capacite speciale : gèle l'adversaire, l'empêchant d'agir pendant 2 tours.
+     * Capacite speciale : empoisonne l'adversaire, qui perd 5 PV par tour pendant 3 tours.
      * Coute 15 PE.
      */
     @Override
@@ -20,8 +22,8 @@ public class CanardGlace extends Canard {
             return;
         }
         pointsEnergie -= 15;
-        System.out.println(getNom() + " active sa capacite speciale : il glace " + adversaire.getNom() + " pour 2 tours !");
-        adversaire.ajouterStatusEffect(StatusEffect.Type.GELE, 2);
+        System.out.println(getNom() + " active sa capacite speciale : il empoisonne " + adversaire.getNom() + " pendant 3 tours !");
+        adversaire.ajouterStatusEffect(StatusEffect.Type.POISON, 3);
         capaciteUtilisee = true;
     }
 }

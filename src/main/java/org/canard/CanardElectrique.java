@@ -1,3 +1,5 @@
+package main.java.org.canard;
+
 public class CanardElectrique extends Canard {
     private boolean capaciteUtilisee = false;
 

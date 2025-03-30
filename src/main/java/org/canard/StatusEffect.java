@@ -1,3 +1,5 @@
+package main.java.org.canard;
+
 public class StatusEffect {
     public enum Type {
         BRULE, GELE, PARALYSE ,POISON

@@ -1,3 +1,5 @@
+package main.java.org.canard;
+
 public class Potion extends Item {
     private int restorePV;
     private int restorePE;

@@ -1,12 +1,14 @@
-public class CanardVent extends Canard {
+package main.java.org.canard;
+
+public class CanardFeu extends Canard {
     private boolean capaciteUtilisee = false;
 
-    public CanardVent(String nom, int pointsDeVie, int pointsAttaque) {
-        super(nom, pointsDeVie, pointsAttaque, TypeCanard.VENT);
+    public CanardFeu(String nom, int pointsDeVie, int pointsAttaque) {
+        super(nom, pointsDeVie, pointsAttaque, TypeCanard.FEU);
     }
 
     /**
-     * Capacite speciale : augmente l'attaque de 5 points.
+     * Capacite speciale : augmente l'attaque de 10 points.
      * Coute 15 PE.
      */
     @Override
@@ -20,8 +22,8 @@ public class CanardVent extends Canard {
             return;
         }
         pointsEnergie -= 15;
-        System.out.println(getNom() + " active sa capacite speciale : augmentation de l'attaque de 5 points !");
-        augmenterAttaque(5); // Augmente l'attaque de 5 points
+        System.out.println(getNom() + " active sa capacite speciale : augmentation de l'attaque de 10 points !");
+        augmenterAttaque(10); // Augmente l'attaque de 10 points
         capaciteUtilisee = true;
     }
 

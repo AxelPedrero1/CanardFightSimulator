@@ -1,9 +1,11 @@
+package main.java.org.canard;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Bienvenue dans Canard Fighter Simulator !");
+        System.out.println("Bienvenue dans main.java.org.canard.Canard Fighter Simulator !");
 
         boolean quitter = false;
         Canard canard1 = null;
@@ -88,7 +90,7 @@ public class Main {
         System.out.println("\nDébut de la bataille entre " + c1.getNom() + " et " + c2.getNom());
         int tour = 1;
         // Création d'une potion à utiliser pendant le combat
-        Potion potion = new Potion("Potion de Soin", 20, 20);
+        Potion potion = new Potion("main.java.org.canard.Potion de Soin", 20, 20);
         while (!c1.estKO() && !c2.estKO()) {
             System.out.println("\nTour " + tour);
 

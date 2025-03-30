@@ -1,12 +1,14 @@
-public class CanardToxique extends Canard {
+package main.java.org.canard;
+
+public class CanardEau extends Canard {
     private boolean capaciteUtilisee = false;
 
-    public CanardToxique(String nom, int pointsDeVie, int pointsAttaque) {
-        super(nom, pointsDeVie, pointsAttaque, TypeCanard.TOXIQUE);
+    public CanardEau(String nom, int pointsDeVie, int pointsAttaque) {
+        super(nom, pointsDeVie, pointsAttaque, TypeCanard.EAU);
     }
 
     /**
-     * Capacite speciale : empoisonne l'adversaire, qui perd 5 PV par tour pendant 3 tours.
+     * Capacite speciale : regenere 20 PV.
      * Coute 15 PE.
      */
     @Override
@@ -20,8 +22,11 @@ public class CanardToxique extends Canard {
             return;
         }
         pointsEnergie -= 15;
-        System.out.println(getNom() + " active sa capacite speciale : il empoisonne " + adversaire.getNom() + " pendant 3 tours !");
-        adversaire.ajouterStatusEffect(StatusEffect.Type.POISON, 3);
+        System.out.println(getNom() + " active sa capacité spéciale : REegen 20 PV !");
+        augmenterPV(20);
         capaciteUtilisee = true;
     }
 }
+
+
+
